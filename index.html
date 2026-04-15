@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zero to Hero — IT Career Roadmap</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f1117;color:#e2e8f0;min-height:100vh}
+  header{background:#1a1f35;border-bottom:1px solid #2d3748;padding:28px 24px 20px;text-align:center}
+  header h1{font-size:clamp(20px,5vw,32px);font-weight:700;color:#fff}
+  header p{font-size:13px;color:#718096;margin-top:5px}
+  .badge{display:inline-block;background:#1a365d;color:#63b3ed;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;margin-top:8px;border:1px solid #2b6cb0}
+  .progress-bar-wrap{background:#1a1f2e;padding:14px 24px;border-bottom:1px solid #2d3748}
+  .progress-label{font-size:12px;color:#718096;margin-bottom:5px;display:flex;justify-content:space-between}
+  .progress-track{height:6px;background:#2d3748;border-radius:3px;overflow:hidden}
+  .progress-fill{height:100%;background:linear-gradient(90deg,#38a169,#68d391);border-radius:3px;transition:width 0.5s ease;width:0%}
+  .tabs{display:flex;overflow-x:auto;background:#1a1f2e;border-bottom:1px solid #2d3748;padding:0 12px;gap:2px;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex-shrink:0;padding:11px 13px;font-size:12px;font-weight:600;color:#718096;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.2s}
+  .tab:hover{color:#a0aec0}
+  .tab.active{color:#fff;border-bottom-color:#4299e1}
+  .content{max-width:900px;margin:0 auto;padding:20px 16px 60px}
+  .phase{display:none}
+  .phase.active{display:block}
+  .phase-header{background:#1a1f2e;border:1px solid #2d3748;border-radius:12px;padding:18px;margin-bottom:18px;display:flex;align-items:center;gap:14px}
+  .phase-icon{font-size:28px;width:52px;height:52px;display:flex;align-items:center;justify-content:center;border-radius:12px;flex-shrink:0}
+  .phase-title{font-size:17px;font-weight:700;color:#fff}
+  .phase-sub{font-size:12px;color:#718096;margin-top:3px}
+  .phase-timeline{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;margin-top:5px;display:inline-block}
+  .section{margin-bottom:14px}
+  .section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#718096;margin-bottom:7px;padding-left:4px}
+  .topic-card{background:#1a1f2e;border:1px solid #2d3748;border-radius:10px;padding:13px 14px;margin-bottom:7px;display:flex;align-items:flex-start;gap:11px;cursor:pointer;transition:border-color 0.2s}
+  .topic-card:hover{border-color:#4a5568}
+  .topic-card.done{opacity:0.5}
+  .checkbox{width:20px;height:20px;min-width:20px;border-radius:5px;border:2px solid #4a5568;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;transition:all 0.2s;margin-top:1px}
+  .checkbox.checked{background:#38a169;border-color:#38a169;color:#fff}
+  .topic-info{flex:1}
+  .topic-label{font-size:13px;color:#e2e8f0;font-weight:500;line-height:1.4}
+  .topic-card.done .topic-label{text-decoration:line-through;color:#4a5568}
+  .topic-desc{font-size:12px;color:#718096;margin-top:3px;line-height:1.5}
+  .btn-group{display:flex;flex-direction:column;gap:4px;flex-shrink:0;onclick:"event.stopPropagation()"}
+  .yt-btn,.ms-btn{font-size:11px;padding:4px 9px;border-radius:6px;text-decoration:none;white-space:nowrap;transition:all 0.2s;display:flex;align-items:center;gap:3px;border:1px solid #2d3748;background:#1a1f2e;color:#a0aec0}
+  .yt-btn:hover{background:#c53030;border-color:#c53030;color:#fff}
+  .ms-btn:hover{background:#1a365d;border-color:#2b6cb0;color:#63b3ed}
+  .info-box{background:#1a2744;border:1px solid #2b6cb0;border-radius:10px;padding:13px 15px;margin-bottom:14px;font-size:13px;color:#90cdf4;line-height:1.6}
+  .info-box strong{color:#63b3ed}
+  .warn-box{background:#2d1a0e;border:1px solid #744210;border-radius:10px;padding:13px 15px;margin-bottom:14px;font-size:13px;color:#fbd38d;line-height:1.6}
+  .cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:14px}
+  .cert-card{background:#1a1f2e;border:1px solid #2d3748;border-radius:10px;padding:13px;text-align:center}
+  .cert-name{font-size:15px;font-weight:700;color:#fff}
+  .cert-full{font-size:11px;color:#718096;margin-top:3px}
+  .cert-salary{font-size:12px;font-weight:600;margin-top:7px}
+  .lab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-bottom:14px}
+  .lab-card{background:#1a1f2e;border:1px solid #2d3748;border-radius:10px;padding:13px}
+  .lab-name{font-size:13px;font-weight:600;color:#e2e8f0}
+  .lab-desc{font-size:12px;color:#718096;margin-top:4px}
+  .lab-link{display:inline-block;margin-top:7px;font-size:11px;color:#63b3ed;text-decoration:none}
+  .lab-link:hover{text-decoration:underline}
+  .nav-btns{display:flex;gap:10px;margin-top:22px;justify-content:space-between}
+  .nav-btn{padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #2d3748;background:#1a1f2e;color:#a0aec0;transition:all 0.2s}
+  .nav-btn:hover{background:#2d3748;color:#fff}
+  .nav-btn.primary{background:#2b6cb0;border-color:#2b6cb0;color:#fff}
+  .nav-btn.primary:hover{background:#2c5282}
+  .nav-btn:disabled{opacity:0.3;cursor:not-allowed}
+  .salary-bar{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .salary-role{font-size:12px;color:#a0aec0;width:180px;flex-shrink:0}
+  .salary-track{flex:1;height:8px;background:#2d3748;border-radius:4px;overflow:hidden}
+  .salary-fill{height:100%;border-radius:4px}
+  .salary-num{font-size:12px;font-weight:600;color:#68d391;width:70px;text-align:right;flex-shrink:0}
+  /* Job hunt */
+  .job-title-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:14px}
+  .job-title-card{background:#1a1f2e;border:1px solid #2d3748;border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:4px}
+  .job-title{font-size:13px;font-weight:600;color:#fff}
+  .job-level{font-size:11px;color:#718096}
+  .job-salary{font-size:11px;font-weight:600;color:#68d391;margin-top:3px}
+  .keyword-grid{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+  .keyword{background:#1a2744;border:1px solid #2b6cb0;color:#63b3ed;font-size:12px;padding:4px 10px;border-radius:20px}
+  .qa-card{background:#1a1f2e;border:1px solid #2d3748;border-radius:10px;margin-bottom:8px;overflow:hidden}
+  .qa-q{padding:13px 16px;font-size:13px;font-weight:600;color:#e2e8f0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .qa-q:hover{background:#252d3d}
+  .qa-a{display:none;padding:12px 16px;font-size:13px;color:#a0aec0;line-height:1.7;border-top:1px solid #2d3748;background:#141820}
+  .qa-a.open{display:block}
+  .qa-arrow{color:#4a5568;font-size:12px;flex-shrink:0;transition:transform 0.2s}
+  .qa-arrow.open{transform:rotate(180deg)}
+  /* Resources */
+  .res-section{margin-bottom:20px}
+  .res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+  .res-card{background:#1a1f2e;border:1px solid #2d3748;border-radius:10px;padding:13px;display:flex;flex-direction:column;gap:5px}
+  .res-name{font-size:13px;font-weight:600;color:#fff}
+  .res-desc{font-size:12px;color:#718096;line-height:1.5}
+  .res-link{display:inline-flex;align-items:center;gap:4px;margin-top:5px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;text-decoration:none;border:1px solid #2d3748;color:#a0aec0;transition:all 0.2s;width:fit-content}
+  .res-link:hover{background:#2d3748;color:#fff}
+  .res-link.yt{border-color:#c53030;color:#fc8181}
+  .res-link.yt:hover{background:#c53030;color:#fff}
+  .res-link.ms{border-color:#2b6cb0;color:#63b3ed}
+  .res-link.ms:hover{background:#2b6cb0;color:#fff}
+  .res-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-bottom:3px}
+  /* Where to apply */
+  .apply-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:14px}
+  .apply-card{background:#1a1f2e;border:1px solid #2d3748;border-radius:10px;padding:13px}
+  .apply-name{font-size:13px;font-weight:600;color:#fff;margin-bottom:4px}
+  .apply-tip{font-size:12px;color:#718096;line-height:1.5}
+  @media(max-width:480px){
+    .phase-header{flex-direction:column;align-items:flex-start;gap:8px}
+    .btn-group{display:none}
+    .cert-grid{grid-template-columns:1fr 1fr}
+    .salary-role{width:110px;font-size:11px}
+    .job-title-grid{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Zero to Hero — IT Career Roadmap</h1>
+  <p>Desktop Support → Endpoint Admin → Cloud Admin → Corporate-Ready Pro</p>
+  <span class="badge">Ram's Complete Roadmap · 2024–2027</span>
+</header>
+
+<div class="progress-bar-wrap">
+  <div class="progress-label"><span>Overall progress</span><span id="prog-text">0 of 0 topics done</span></div>
+  <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+</div>
+
+<div class="tabs" id="tab-bar">
+  <div class="tab active" data-phase="p0">🗺️ Overview</div>
+  <div class="tab" data-phase="p1">🔵 Level 1</div>
+  <div class="tab" data-phase="p2">🟢 Level 2</div>
+  <div class="tab" data-phase="p3">🟡 Level 3</div>
+  <div class="tab" data-phase="p4">🔴 Level 4</div>
+  <div class="tab" data-phase="p5">🧪 Lab Setup</div>
+  <div class="tab" data-phase="p6">💰 Salaries</div>
+  <div class="tab" data-phase="p7">💼 Job Hunt</div>
+  <div class="tab" data-phase="p8">📚 Resources</div>
+</div>
+
+<div class="content">
+
+<!-- OVERVIEW -->
+<div class="phase active" id="p0">
+  <div class="info-box"><strong>Your starting point:</strong> Desktop Support Engineer — reimaging, hardware, client support. You have real IT discipline. This roadmap takes you from where you are today to working confidently in any Microsoft corporate environment — step by step, nothing skipped.</div>
+  <div class="section-title">Your journey at a glance</div>
+  <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px">
+    <div style="background:#1a1f2e;border:1px solid #2d3748;border-radius:10px;padding:14px;display:flex;align-items:center;gap:12px"><div style="background:#2d3748;color:#a0aec0;font-size:10px;font-weight:700;padding:5px 10px;border-radius:7px;min-width:72px;text-align:center">NOW</div><div><div style="font-size:13px;font-weight:600;color:#fff">Desktop Support Engineer</div><div style="font-size:12px;color:#718096;margin-top:2px">Reimaging · Hardware · Client visits · Helpdesk</div></div></div>
+    <div style="text-align:center;color:#4a5568;font-size:16px">↓</div>
+    <div style="background:#1a1f2e;border:1px solid #276749;border-radius:10px;padding:14px;display:flex;align-items:center;gap:12px"><div style="background:#1c4532;color:#68d391;font-size:10px;font-weight:700;padding:5px 10px;border-radius:7px;min-width:72px;text-align:center">MONTH 4–6</div><div><div style="font-size:13px;font-weight:600;color:#fff">Endpoint / Cloud Admin</div><div style="font-size:12px;color:#718096;margin-top:2px">MD-102 certified · Intune · Entra ID · $70–95k</div></div></div>
+    <div style="text-align:center;color:#4a5568;font-size:16px">↓</div>
+    <div style="background:#1a1f2e;border:1px solid #2b6cb0;border-radius:10px;padding:14px;display:flex;align-items:center;gap:12px"><div style="background:#1a365d;color:#63b3ed;font-size:10px;font-weight:700;padding:5px 10px;border-radius:7px;min-width:72px;text-align:center">MONTH 12</div><div><div style="font-size:13px;font-weight:600;color:#fff">Modern Workplace / Azure Admin</div><div style="font-size:12px;color:#718096;margin-top:2px">AZ-104 certified · PowerShell · Hybrid environments · $95–120k</div></div></div>
+    <div style="text-align:center;color:#4a5568;font-size:16px">↓</div>
+    <div style="background:#1a1f2e;border:1px solid #553c9a;border-radius:10px;padding:14px;display:flex;align-items:center;gap:12px"><div style="background:#322659;color:#b794f4;font-size:10px;font-weight:700;padding:5px 10px;border-radius:7px;min-width:72px;text-align:center">YEAR 2</div><div><div style="font-size:13px;font-weight:600;color:#fff">Cloud Security / Solutions Engineer</div><div style="font-size:12px;color:#718096;margin-top:2px">SC-300 · Zero Trust · Any corporate · $120–160k</div></div></div>
+    <div style="text-align:center;color:#4a5568;font-size:16px">↓</div>
+    <div style="background:#1a1f2e;border:1px solid #744210;border-radius:10px;padding:14px;display:flex;align-items:center;gap:12px"><div style="background:#7b341e;color:#fbd38d;font-size:10px;font-weight:700;padding:5px 10px;border-radius:7px;min-width:72px;text-align:center">YEAR 3+</div><div><div style="font-size:13px;font-weight:600;color:#fff">Cloud Architect / Senior Engineer</div><div style="font-size:12px;color:#718096;margin-top:2px">AZ-305 · Lead migrations · Consult · $150k+</div></div></div>
+  </div>
+  <div class="section-title">Certifications in order</div>
+  <div class="cert-grid">
+    <div class="cert-card"><div style="font-size:18px;margin-bottom:5px">1️⃣</div><div class="cert-name">MD-102</div><div class="cert-full">Endpoint Administrator</div><div class="cert-salary" style="color:#68d391">Start here — Month 3</div></div>
+    <div class="cert-card"><div style="font-size:18px;margin-bottom:5px">2️⃣</div><div class="cert-name">AZ-104</div><div class="cert-full">Azure Administrator</div><div class="cert-salary" style="color:#63b3ed">Month 6–10</div></div>
+    <div class="cert-card"><div style="font-size:18px;margin-bottom:5px">3️⃣</div><div class="cert-name">SC-300</div><div class="cert-full">Identity & Access Admin</div><div class="cert-salary" style="color:#b794f4">Year 2</div></div>
+    <div class="cert-card"><div style="font-size:18px;margin-bottom:5px">4️⃣</div><div class="cert-name">AZ-305</div><div class="cert-full">Azure Solutions Architect</div><div class="cert-salary" style="color:#fbd38d">Year 3</div></div>
+  </div>
+  <div class="warn-box"><strong>Remember:</strong> The cert gets you the interview. Your lab experience gets you the job. Always practice in your free Intune/Azure lab what you study — so you can talk about it confidently in interviews.</div>
+  <div class="nav-btns"><button class="nav-btn" disabled>← Back</button><button class="nav-btn primary" onclick="gotoTab('p1')">Start Level 1 →</button></div>
+</div>
+
+<!-- LEVEL 1 -->
+<div class="phase" id="p1">
+  <div class="phase-header"><div class="phase-icon" style="background:#1c4532">🎯</div><div><div class="phase-title">Level 1 — Get Hired</div><div class="phase-sub">0 to 6 months · Target: Endpoint Admin / Modern Workplace Engineer</div><span class="phase-timeline" style="background:#1c4532;color:#68d391">Target salary: $70,000–$95,000</span></div></div>
+  <div class="info-box"><strong>Goal:</strong> Pass MD-102, build a home lab, and land your first cloud/endpoint admin role. You don't need to know everything — you need to know enough to get hired and learn the rest on the job.</div>
+  <div class="section"><div class="section-title">Phase A — Foundations (Week 1–2)</div><div id="l1a"></div></div>
+  <div class="section"><div class="section-title">Phase B — Core Intune Skills (Week 3–8)</div><div id="l1b"></div></div>
+  <div class="section"><div class="section-title">Phase C — Exam + Job Hunt (Week 9–12)</div><div id="l1c"></div></div>
+  <div class="nav-btns"><button class="nav-btn" onclick="gotoTab('p0')">← Overview</button><button class="nav-btn primary" onclick="gotoTab('p2')">Level 2 →</button></div>
+</div>
+
+<!-- LEVEL 2 -->
+<div class="phase" id="p2">
+  <div class="phase-header"><div class="phase-icon" style="background:#1a365d">⚡</div><div><div class="phase-title">Level 2 — Survive & Grow on the Job</div><div class="phase-sub">Month 6–18 · Target: Azure Admin + PowerShell Automation</div><span class="phase-timeline" style="background:#1a365d;color:#63b3ed">Target salary: $95,000–$120,000</span></div></div>
+  <div class="info-box"><strong>Goal:</strong> You're hired. Now go deeper. Study AZ-104 while working. Learn to automate with PowerShell. Understand hybrid environments. Go from "junior" to "mid-level."</div>
+  <div class="section"><div class="section-title">Phase A — Azure Core (Month 6–9)</div><div id="l2a"></div></div>
+  <div class="section"><div class="section-title">Phase B — PowerShell Automation (Month 7–12)</div><div id="l2b"></div></div>
+  <div class="section"><div class="section-title">Phase C — Hybrid & Networking (Month 10–18)</div><div id="l2c"></div></div>
+  <div class="nav-btns"><button class="nav-btn" onclick="gotoTab('p1')">← Level 1</button><button class="nav-btn primary" onclick="gotoTab('p3')">Level 3 →</button></div>
+</div>
+
+<!-- LEVEL 3 -->
+<div class="phase" id="p3">
+  <div class="phase-header"><div class="phase-icon" style="background:#322659">🛡️</div><div><div class="phase-title">Level 3 — Work in Any Corporate Confidently</div><div class="phase-sub">Month 18–36 · Security + Identity + Architecture</div><span class="phase-timeline" style="background:#322659;color:#b794f4">Target salary: $120,000–$150,000</span></div></div>
+  <div class="info-box"><strong>Goal:</strong> Walk into any Microsoft environment, understand how it's set up, fix what's broken, and design what's needed. You know security, identity, compliance, and automation deeply.</div>
+  <div class="section"><div class="section-title">Phase A — Security & Identity (Month 18–24)</div><div id="l3a"></div></div>
+  <div class="section"><div class="section-title">Phase B — Governance & Compliance (Month 24–30)</div><div id="l3b"></div></div>
+  <div class="section"><div class="section-title">Phase C — Architecture Thinking (Month 30–36)</div><div id="l3c"></div></div>
+  <div class="nav-btns"><button class="nav-btn" onclick="gotoTab('p2')">← Level 2</button><button class="nav-btn primary" onclick="gotoTab('p4')">Level 4 →</button></div>
+</div>
+
+<!-- LEVEL 4 -->
+<div class="phase" id="p4">
+  <div class="phase-header"><div class="phase-icon" style="background:#7b341e">🚀</div><div><div class="phase-title">Level 4 — Hero Mode</div><div class="phase-sub">Year 3+ · Cloud Architect / Senior Engineer / Consultant</div><span class="phase-timeline" style="background:#7b341e;color:#fbd38d">Target salary: $150,000+</span></div></div>
+  <div class="info-box"><strong>Goal:</strong> Design full cloud environments, lead migrations, mentor juniors, and consult for any organisation. Remote-eligible, highly paid, and can work for yourself.</div>
+  <div class="section"><div class="section-title">Phase A — Architecture (Year 3)</div><div id="l4a"></div></div>
+  <div class="section"><div class="section-title">Phase B — Soft Skills & Leadership (Year 3–4)</div><div id="l4b"></div></div>
+  <div class="nav-btns"><button class="nav-btn" onclick="gotoTab('p3')">← Level 3</button><button class="nav-btn primary" onclick="gotoTab('p5')">Lab Setup →</button></div>
+</div>
+
+<!-- LAB SETUP -->
+<div class="phase" id="p5">
+  <div class="phase-header"><div class="phase-icon" style="background:#1a2e1a">🧪</div><div><div class="phase-title">Free Lab Setup</div><div class="phase-sub">Everything you need to practise — all free</div></div></div>
+  <div class="warn-box"><strong>Note:</strong> Microsoft 365 Developer Program is now restricted to Visual Studio subscribers. Use these alternatives — they cover 100% of what you need for MD-102 and AZ-104.</div>
+  <div class="section-title">Your free lab stack</div>
+  <div class="lab-grid">
+    <div class="lab-card"><div style="font-size:18px;margin-bottom:5px">☁️</div><div class="lab-name">Azure Free Account</div><div class="lab-desc">$200 credit for 30 days + always-free services. Entra ID included.</div><a class="lab-link" href="https://azure.microsoft.com/en-us/free/" target="_blank">→ Sign up free</a></div>
+    <div class="lab-card"><div style="font-size:18px;margin-bottom:5px">📱</div><div class="lab-name">Intune Trial Tenant</div><div class="lab-desc">30-day standalone Intune trial. Renew with a new email when it expires.</div><a class="lab-link" href="https://www.microsoft.com/en-us/security/business/microsoft-intune" target="_blank">→ Start trial</a></div>
+    <div class="lab-card"><div style="font-size:18px;margin-bottom:5px">📚</div><div class="lab-name">Microsoft Learn Sandboxes</div><div class="lab-desc">Built-in free labs inside every Microsoft Learn module. No setup needed.</div><a class="lab-link" href="https://learn.microsoft.com" target="_blank">→ Go to Learn</a></div>
+    <div class="lab-card"><div style="font-size:18px;margin-bottom:5px">🖥️</div><div class="lab-name">M365 Business Premium Trial</div><div class="lab-desc">30-day full M365 + Intune + Entra ID. Credit card required, not charged.</div><a class="lab-link" href="https://www.microsoft.com/en-us/microsoft-365/business/compare-all-plans" target="_blank">→ Start trial</a></div>
+    <div class="lab-card"><div style="font-size:18px;margin-bottom:5px">💻</div><div class="lab-name">VirtualBox (Free VMs)</div><div class="lab-desc">Run Windows 11 VMs locally to enrol into your Intune lab.</div><a class="lab-link" href="https://www.virtualbox.org/wiki/Downloads" target="_blank">→ Download free</a></div>
+    <div class="lab-card"><div style="font-size:18px;margin-bottom:5px">🪟</div><div class="lab-name">Windows 11 Eval ISO</div><div class="lab-desc">Free 90-day Windows 11 Enterprise evaluation from Microsoft.</div><a class="lab-link" href="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-11-enterprise" target="_blank">→ Download ISO</a></div>
+  </div>
+  <div class="section-title">Lab setup order — do this once</div>
+  <div id="labsetup"></div>
+  <div class="nav-btns"><button class="nav-btn" onclick="gotoTab('p4')">← Level 4</button><button class="nav-btn primary" onclick="gotoTab('p6')">Salaries →</button></div>
+</div>
+
+<!-- SALARIES -->
+<div class="phase" id="p6">
+  <div class="phase-header"><div class="phase-icon" style="background:#1a2e1a">💰</div><div><div class="phase-title">Salary Progression</div><div class="phase-sub">What you can earn at each level</div></div></div>
+  <div class="info-box">Global averages. Salaries vary by country, company size, remote vs on-site. MSPs pay more at junior level. Enterprise pays more senior. Remote roles can pay US-equivalent salaries anywhere in the world.</div>
+  <div class="section-title">Your earning trajectory</div>
+  <div style="margin-bottom:22px">
+    <div class="salary-bar"><div class="salary-role">Desktop Support (now)</div><div class="salary-track"><div class="salary-fill" style="width:20%;background:#4a5568"></div></div><div class="salary-num">$35–55k</div></div>
+    <div class="salary-bar"><div class="salary-role">Endpoint Admin (MD-102)</div><div class="salary-track"><div class="salary-fill" style="width:45%;background:#38a169"></div></div><div class="salary-num">$70–95k</div></div>
+    <div class="salary-bar"><div class="salary-role">Azure Admin (AZ-104)</div><div class="salary-track"><div class="salary-fill" style="width:60%;background:#3182ce"></div></div><div class="salary-num">$95–120k</div></div>
+    <div class="salary-bar"><div class="salary-role">Security Engineer (SC-300)</div><div class="salary-track"><div class="salary-fill" style="width:75%;background:#805ad5"></div></div><div class="salary-num">$120–145k</div></div>
+    <div class="salary-bar"><div class="salary-role">Cloud Architect (AZ-305)</div><div class="salary-track"><div class="salary-fill" style="width:92%;background:#dd6b20"></div></div><div class="salary-num">$150k+</div></div>
+  </div>
+  <div class="section-title">How to maximise your salary</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin-bottom:18px">
+    <div style="background:#1a1f2e;border:1px solid #2d3748;border-radius:10px;padding:13px"><div style="font-size:12px;font-weight:600;color:#68d391;margin-bottom:5px">Stack certifications</div><div style="font-size:12px;color:#718096;line-height:1.6">Each cert adds $10–25k to your market value. MD-102 + AZ-104 together are far stronger than either alone.</div></div>
+    <div style="background:#1a1f2e;border:1px solid #2d3748;border-radius:10px;padding:13px"><div style="font-size:12px;font-weight:600;color:#63b3ed;margin-bottom:5px">Target MSPs first</div><div style="font-size:12px;color:#718096;line-height:1.6">Managed Service Providers hire earlier, pay well, and expose you to many environments fast.</div></div>
+    <div style="background:#1a1f2e;border:1px solid #2d3748;border-radius:10px;padding:13px"><div style="font-size:12px;font-weight:600;color:#b794f4;margin-bottom:5px">Go remote</div><div style="font-size:12px;color:#718096;line-height:1.6">Cloud admin is one of the most remote-friendly IT roles. Remote opens global salary ranges wherever you live.</div></div>
+    <div style="background:#1a1f2e;border:1px solid #2d3748;border-radius:10px;padding:13px"><div style="font-size:12px;font-weight:600;color:#fbd38d;margin-bottom:5px">Add PowerShell</div><div style="font-size:12px;color:#718096;line-height:1.6">Admins who automate with PowerShell are much harder to find and command significantly higher rates.</div></div>
+  </div>
+  <div class="nav-btns"><button class="nav-btn" onclick="gotoTab('p5')">← Lab Setup</button><button class="nav-btn primary" onclick="gotoTab('p7')">Job Hunt →</button></div>
+</div>
+
+<!-- JOB HUNT -->
+<div class="phase" id="p7">
+  <div class="phase-header"><div class="phase-icon" style="background:#1a2e1a">💼</div><div><div class="phase-title">Job Hunt Guide</div><div class="phase-sub">Job titles · CV keywords · Where to apply · Interview Q&A</div></div></div>
+
+  <div class="info-box"><strong>Key rule:</strong> Start applying from Week 8 — before you pass the exam. Many employers hire on potential + cert in progress. Waiting until you're "fully ready" costs you months.</div>
+
+  <div class="section-title">Job titles to search for</div>
+  <div class="job-title-grid">
+    <div class="job-title-card"><div class="job-title">Modern Workplace Engineer</div><div class="job-level">Entry–Mid · Your primary target</div><div class="job-salary">$70–95k</div></div>
+    <div class="job-title-card"><div class="job-title">Endpoint Administrator</div><div class="job-level">Entry–Mid · Direct MD-102 match</div><div class="job-salary">$70–90k</div></div>
+    <div class="job-title-card"><div class="job-title">Intune Administrator</div><div class="job-level">Entry–Mid · Highly searchable</div><div class="job-salary">$65–95k</div></div>
+    <div class="job-title-card"><div class="job-title">Cloud Support Engineer</div><div class="job-level">Entry · Good for first cloud role</div><div class="job-salary">$60–85k</div></div>
+    <div class="job-title-card"><div class="job-title">Systems Administrator</div><div class="job-level">Mid · Hybrid + cloud roles</div><div class="job-salary">$70–100k</div></div>
+    <div class="job-title-card"><div class="job-title">IT Cloud Engineer</div><div class="job-level">Mid · MSP or enterprise</div><div class="job-salary">$80–110k</div></div>
+    <div class="job-title-card"><div class="job-title">M365 Administrator</div><div class="job-level">Entry–Mid · M365 focus</div><div class="job-salary">$65–90k</div></div>
+    <div class="job-title-card"><div class="job-title">Azure Administrator</div><div class="job-level">Mid · After AZ-104</div><div class="job-salary">$90–120k</div></div>
+  </div>
+
+  <div class="section-title">CV & LinkedIn keywords to include</div>
+  <div class="keyword-grid">
+    <span class="keyword">Microsoft Intune</span><span class="keyword">Entra ID</span><span class="keyword">Azure AD</span><span class="keyword">Windows Autopilot</span><span class="keyword">Endpoint Management</span><span class="keyword">MDM</span><span class="keyword">Conditional Access</span><span class="keyword">Compliance Policies</span><span class="keyword">Configuration Profiles</span><span class="keyword">Microsoft Defender</span><span class="keyword">PowerShell</span><span class="keyword">Microsoft 365</span><span class="keyword">Device Enrollment</span><span class="keyword">RBAC</span><span class="keyword">Zero Trust</span><span class="keyword">Win32 App Deployment</span><span class="keyword">BitLocker</span><span class="keyword">Security Baselines</span><span class="keyword">MD-102</span><span class="keyword">Modern Workplace</span>
+  </div>
+
+  <div class="section-title">Where to apply</div>
+  <div class="apply-grid">
+    <div class="apply-card"><div class="apply-name">LinkedIn Jobs</div><div class="apply-tip">Best platform. Set job alerts for "Intune", "Modern Workplace", "Endpoint Admin". Connect with recruiters daily.</div></div>
+    <div class="apply-card"><div class="apply-name">MSPs (top priority)</div><div class="apply-tip">Managed Service Providers hire earlier, train you, and expose you to many clients. Search "MSP Intune engineer" on LinkedIn.</div></div>
+    <div class="apply-card"><div class="apply-name">Indeed / Glassdoor</div><div class="apply-tip">Good volume of entry-level IT cloud roles. Filter by "cloud", "Intune", "endpoint". Good for salary benchmarking too.</div></div>
+    <div class="apply-card"><div class="apply-name">Microsoft Partner Companies</div><div class="apply-tip">Companies with Microsoft Gold/Silver partner status actively need Intune/Azure admins. Search "Microsoft partner employer".</div></div>
+    <div class="apply-card"><div class="apply-name">Your current employer</div><div class="apply-tip">Ask if there's a cloud team internally. Getting promoted from desktop support to endpoint admin at same company is the fastest route.</div></div>
+    <div class="apply-card"><div class="apply-name">Upwork / Toptal</div><div class="apply-tip">Once you have MD-102, freelance Intune/M365 admin work is available. Great for extra income while job hunting.</div></div>
+  </div>
+
+  <div class="section-title">Top 15 Intune interview questions — with answers</div>
+  <div id="qa-container"></div>
+
+  <div class="nav-btns"><button class="nav-btn" onclick="gotoTab('p6')">← Salaries</button><button class="nav-btn primary" onclick="gotoTab('p8')">Resources →</button></div>
+</div>
+
+<!-- RESOURCES -->
+<div class="phase" id="p8">
+  <div class="phase-header"><div class="phase-icon" style="background:#1a2e1a">📚</div><div><div class="phase-title">All Resources in One Place</div><div class="phase-sub">Every link from your entire study plan — organised by category</div></div></div>
+
+  <div class="res-section">
+    <div class="section-title">MD-102 — Official Microsoft Resources</div>
+    <div class="res-grid">
+      <div class="res-card"><span class="res-tag" style="background:#1c4532;color:#68d391">Official</span><div class="res-name">MD-102 Study Guide</div><div class="res-desc">Official Microsoft skills measured document with all exam topics</div><a class="res-link ms" href="https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/md-102" target="_blank">📘 Open</a></div>
+      <div class="res-card"><span class="res-tag" style="background:#1c4532;color:#68d391">Official</span><div class="res-name">MD-102 Cert Page + Free Practice Test</div><div class="res-desc">Cert overview, schedule exam, free practice assessment</div><a class="res-link ms" href="https://learn.microsoft.com/en-us/credentials/certifications/modern-desktop/" target="_blank">📘 Open</a></div>
+      <div class="res-card"><span class="res-tag" style="background:#1c4532;color:#68d391">Official</span><div class="res-name">MS Learn — Explore Endpoint Management</div><div class="res-desc">Microsoft's official step-by-step MD-102 learning path</div><a class="res-link ms" href="https://learn.microsoft.com/en-us/training/paths/explore-endpoint-management/" target="_blank">📘 Open</a></div>
+      <div class="res-card"><span class="res-tag" style="background:#7b341e;color:#fbd38d">Paid ~$15</span><div class="res-name">Udemy MD-102 Courses</div><div class="res-desc">Best video courses — buy on sale for $12–15</div><a class="res-link" href="https://www.udemy.com/topic/microsoft-md-102/" target="_blank">→ Browse</a></div>
+    </div>
+  </div>
+
+  <div class="res-section">
+    <div class="section-title">AZ-104 — Azure Administrator</div>
+    <div class="res-grid">
+      <div class="res-card"><span class="res-tag" style="background:#1a365d;color:#63b3ed">Official</span><div class="res-name">AZ-104 Study Guide</div><div class="res-desc">Official Microsoft skills measured document for AZ-104</div><a class="res-link ms" href="https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104" target="_blank">📘 Open</a></div>
+      <div class="res-card"><span class="res-tag" style="background:#1a365d;color:#63b3ed">Official</span><div class="res-name">AZ-104 Microsoft Learn Path</div><div class="res-desc">Official free training modules for Azure Administrator</div><a class="res-link ms" href="https://learn.microsoft.com/en-us/training/paths/az-104-administrator-prerequisites/" target="_blank">📘 Open</a></div>
+      <div class="res-card"><span class="res-tag" style="background:#1a365d;color:#63b3ed">Free Lab</span><div class="res-name">AZ-104 Official Hands-on Labs</div><div class="res-desc">GitHub repo with Microsoft's official lab exercises</div><a class="res-link ms" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/" target="_blank">📘 Open</a></div>
+      <div class="res-card"><span class="res-tag" style="background:#1a365d;color:#63b3ed">Free</span><div class="res-name">300+ Free AZ-104 Practice Questions</div><div class="res-desc">Free practice questions with detailed explanations</div><a class="res-link ms" href="https://certstud.com/certifications/microsoft/az-104" target="_blank">📘 Open</a></div>
+    </div>
+  </div>
+
+  <div class="res-section">
+    <div class="section-title">PowerShell</div>
+    <div class="res-grid">
+      <div class="res-card"><span class="res-tag" style="background:#1c4532;color:#68d391">Official</span><div class="res-name">MS Learn — Get Started with PowerShell</div><div class="res-desc">Microsoft's official beginner PowerShell learning path</div><a class="res-link ms" href="https://learn.microsoft.com/en-us/training/paths/get-started-windows-powershell/" target="_blank">📘 Open</a></div>
+      <div class="res-card"><span class="res-tag" style="background:#1c4532;color:#68d391">Official</span><div class="res-name">Azure PowerShell Docs</div><div class="res-desc">Official docs for managing Azure with PowerShell</div><a class="res-link ms" href="https://learn.microsoft.com/en-us/powershell/azure/get-started-azureps" target="_blank">📘 Open</a></div>
+      <div class="res-card"><span class="res-tag" style="background:#1a365d;color:#63b3ed">Free</span><div class="res-name">Codecademy — Learn PowerShell</div><div class="res-desc">Interactive browser-based PowerShell course — great for beginners</div><a class="res-link ms" href="https://www.codecademy.com/learn/learn-powershell" target="_blank">📘 Open</a></div>
+      <div class="res-card"><span class="res-tag" style="background:#322659;color:#b794f4">Practice</span><div class="res-name">UnderTheWire — PowerShell Challenges</div><div class="res-desc">Fun wargame-style PowerShell challenges — learn by doing</div><a class="res-link ms" href="https://underthewire.tech" target="_blank">📘 Open</a></div>
+    </div>
+  </div>
+
+  <div class="res-section">
+    <div class="section-title">YouTube Channels — Watch These Only</div>
+    <div class="res-grid">
+      <div class="res-card"><span class="res-tag" style="background:#c53030;color:#fed7d7">YouTube</span><div class="res-name">John Savill's Technical Training</div><div class="res-desc">Best free AZ-104 and Azure content on YouTube. His study cram videos are gold.</div><a class="res-link yt" href="https://www.youtube.com/@NTFAQGuy" target="_blank">▶ Watch</a></div>
+      <div class="res-card"><span class="res-tag" style="background:#c53030;color:#fed7d7">YouTube</span><div class="res-name">Microsoft Mechanics</div><div class="res-desc">Official Microsoft channel. Great walkthroughs of Intune, Entra ID, Defender features.</div><a class="res-link yt" href="https://www.youtube.com/@MicrosoftMechanics" target="_blank">▶ Watch</a></div>
+      <div class="res-card"><span class="res-tag" style="background:#c53030;color:#fed7d7">YouTube</span><div class="res-name">HTMD Community (Intune)</div><div class="res-desc">Detailed Intune tutorials — very practical, step-by-step. Great for MD-102.</div><a class="res-link yt" href="https://www.youtube.com/@HTMD-Community" target="_blank">▶ Watch</a></div>
+      <div class="res-card"><span class="res-tag" style="background:#c53030;color:#fed7d7">YouTube</span><div class="res-name">Andy Malone MVP</div><div class="res-desc">MD-102 specific content, very exam-focused. Good for Autopilot and compliance topics.</div><a class="res-link yt" href="https://www.youtube.com/@AndyMaloneMVP" target="_blank">▶ Watch</a></div>
+    </div>
+  </div>
+
+  <div class="res-section">
+    <div class="section-title">Free Lab Links</div>
+    <div class="res-grid">
+      <div class="res-card"><span class="res-tag" style="background:#1c4532;color:#68d391">Free</span><div class="res-name">Azure Free Account</div><div class="res-desc">$200 credit, Entra ID, 30 days — everything for AZ-104 lab</div><a class="res-link ms" href="https://azure.microsoft.com/en-us/free/" target="_blank">📘 Sign Up</a></div>
+      <div class="res-card"><span class="res-tag" style="background:#1c4532;color:#68d391">Free Trial</span><div class="res-name">Microsoft Intune Trial</div><div class="res-desc">30-day standalone Intune trial — renew with new email</div><a class="res-link ms" href="https://www.microsoft.com/en-us/security/business/microsoft-intune" target="_blank">📘 Sign Up</a></div>
+      <div class="res-card"><span class="res-tag" style="background:#1c4532;color:#68d391">Free</span><div class="res-name">VirtualBox</div><div class="res-desc">Free VM software — run Windows 11 inside your PC for lab</div><a class="res-link ms" href="https://www.virtualbox.org/wiki/Downloads" target="_blank">📘 Download</a></div>
+      <div class="res-card"><span class="res-tag" style="background:#1c4532;color:#68d391">Free 90 days</span><div class="res-name">Windows 11 Enterprise Eval</div><div class="res-desc">Free Windows 11 ISO from Microsoft for lab use</div><a class="res-link ms" href="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-11-enterprise" target="_blank">📘 Download</a></div>
+    </div>
+  </div>
+
+  <div class="res-section">
+    <div class="section-title">Book the Exam</div>
+    <div class="res-grid">
+      <div class="res-card"><span class="res-tag" style="background:#7b341e;color:#fbd38d">$165 USD</span><div class="res-name">Pearson VUE — MD-102</div><div class="res-desc">Official exam booking for MD-102. Book a date and commit — it forces you to study.</div><a class="res-link ms" href="https://learn.microsoft.com/en-us/credentials/certifications/modern-desktop/" target="_blank">📘 Book Exam</a></div>
+      <div class="res-card"><span class="res-tag" style="background:#7b341e;color:#fbd38d">$165 USD</span><div class="res-name">Pearson VUE — AZ-104</div><div class="res-desc">Official exam booking for AZ-104. Take after you're working in the role.</div><a class="res-link ms" href="https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/" target="_blank">📘 Book Exam</a></div>
+    </div>
+  </div>
+
+  <div class="nav-btns"><button class="nav-btn" onclick="gotoTab('p7')">← Job Hunt</button><button class="nav-btn primary" onclick="gotoTab('p0')">Back to Overview →</button></div>
+</div>
+
+</div>
+
+<script>
+const topics = {
+  l1a:[
+    {id:"l1a1",label:"What is Microsoft Intune?",desc:"Understand what Intune does and why companies use it",q:"What is Microsoft Intune explained beginners 2024"},
+    {id:"l1a2",label:"What is Entra ID (Azure AD)?",desc:"Microsoft's cloud identity and access management platform",q:"Azure AD Entra ID explained beginners"},
+    {id:"l1a3",label:"Cloud vs On-premise IT",desc:"Understand the shift from traditional IT to cloud management",q:"cloud vs on premise IT administration explained"},
+    {id:"l1a4",label:"Overview of the Intune Admin Center",desc:"Tour the portal you'll use every day as an endpoint admin",q:"Microsoft Intune admin center overview tutorial 2024"},
+  ],
+  l1b:[
+    {id:"l1b1",label:"Enroll a Windows device into Intune",desc:"The most fundamental Intune task — do this in your lab",q:"enroll Windows device Microsoft Intune tutorial step by step"},
+    {id:"l1b2",label:"Create users and groups in Entra ID",desc:"Users and groups are how you target policies to devices",q:"create users groups Entra ID Intune tutorial"},
+    {id:"l1b3",label:"Windows Autopilot — what it is",desc:"Cloud-based replacement for reimaging — directly relevant to your current job",q:"Windows Autopilot explained beginners"},
+    {id:"l1b4",label:"Autopilot deployment profiles",desc:"How to configure Autopilot to auto-setup new devices",q:"Windows Autopilot deployment profiles Intune setup tutorial"},
+    {id:"l1b5",label:"Configuration profiles in Intune",desc:"Push settings to devices without touching them",q:"configuration profiles Microsoft Intune explained tutorial"},
+    {id:"l1b6",label:"Compliance policies in Intune",desc:"Define what a healthy device looks like",q:"compliance policies Microsoft Intune tutorial 2024"},
+    {id:"l1b7",label:"Conditional Access policies",desc:"Block access if device is not compliant or MFA not done",q:"Conditional Access policy Intune Entra ID step by step"},
+    {id:"l1b8",label:"Microsoft Defender for Endpoint basics",desc:"Antivirus, threat protection, and security baselines via Intune",q:"Microsoft Defender for Endpoint Intune integration tutorial"},
+    {id:"l1b9",label:"Deploy apps via Intune (Win32)",desc:"Push software to devices without touching them",q:"deploy Win32 app Microsoft Intune tutorial step by step"},
+    {id:"l1b10",label:"BitLocker encryption via Intune",desc:"Enforce full disk encryption on managed devices",q:"BitLocker encryption policy Intune tutorial"},
+  ],
+  l1c:[
+    {id:"l1c1",label:"Take Microsoft free MD-102 practice assessment",desc:"Official free practice test at Microsoft Learn",q:"MD-102 free practice assessment Microsoft Learn"},
+    {id:"l1c2",label:"Do 200+ practice questions (Udemy / MeasureUp)",desc:"Identify weak areas before booking the real exam",q:"MD-102 practice test Udemy 2024"},
+    {id:"l1c3",label:"Book and pass the MD-102 exam",desc:"Pearson VUE — $165 USD. Book a date and commit.",q:"how to book MD-102 exam Pearson VUE"},
+    {id:"l1c4",label:"Update LinkedIn and CV with MD-102 + Intune skills",desc:"Add the cert badge, list all tools you practised in your lab",q:"how to add Microsoft certification LinkedIn profile"},
+    {id:"l1c5",label:"Apply to Endpoint Admin / Modern Workplace Engineer roles",desc:"Target MSPs first — they hire earlier and train faster",q:"modern workplace engineer jobs MSP entry level"},
+  ],
+  l2a:[
+    {id:"l2a1",label:"Azure subscriptions, tenants, and resource groups",desc:"The fundamental structure of every Azure environment",q:"Azure subscriptions tenants resource groups explained"},
+    {id:"l2a2",label:"Azure Virtual Machines (VMs)",desc:"Deploy, configure, and manage VMs in Azure",q:"Azure Virtual Machines tutorial beginners AZ-104"},
+    {id:"l2a3",label:"Azure Networking — VNets, NSGs, Subnets",desc:"How cloud networking works — different from on-prem",q:"Azure Virtual Network VNet NSG tutorial AZ-104"},
+    {id:"l2a4",label:"Azure Storage accounts",desc:"Blobs, file shares, and storage tiers",q:"Azure Storage accounts tutorial AZ-104 beginners"},
+    {id:"l2a5",label:"Azure RBAC (Role Based Access Control)",desc:"Control who can do what in Azure",q:"Azure RBAC Role Based Access Control tutorial AZ-104"},
+    {id:"l2a6",label:"Azure Monitor and Log Analytics",desc:"Monitor your cloud resources and set up alerts",q:"Azure Monitor Log Analytics tutorial AZ-104"},
+    {id:"l2a7",label:"Pass AZ-104 exam",desc:"Azure Administrator Associate — your second major cert",q:"AZ-104 exam tips how to pass 2024"},
+  ],
+  l2b:[
+    {id:"l2b1",label:"PowerShell basics — cmdlets, variables, pipeline",desc:"Get-Help, Get-Command, foreach, if/else",q:"PowerShell basics beginners IT admin tutorial"},
+    {id:"l2b2",label:"Manage Entra ID users with PowerShell",desc:"Create, update, disable users in bulk via scripts",q:"manage Azure AD Entra ID users PowerShell tutorial"},
+    {id:"l2b3",label:"Connect to Microsoft Graph API with PowerShell",desc:"Query and manage Intune/Entra via Graph",q:"Microsoft Graph PowerShell connect beginners tutorial"},
+    {id:"l2b4",label:"Get Intune device inventory with PowerShell",desc:"Export device lists, compliance status, etc.",q:"Intune device inventory PowerShell Graph API tutorial"},
+    {id:"l2b5",label:"Azure PowerShell — manage VMs and resources",desc:"Create and modify Azure resources via scripts",q:"Azure PowerShell manage VMs resources tutorial"},
+    {id:"l2b6",label:"Write your first automation script",desc:"Auto-disable inactive users, export reports, bulk actions",q:"PowerShell automation script IT admin real world examples"},
+  ],
+  l2c:[
+    {id:"l2c1",label:"What is a hybrid environment?",desc:"On-premises AD + Azure AD joined — very common in corporates",q:"hybrid Azure AD join explained on premise cloud"},
+    {id:"l2c2",label:"Azure AD Connect — sync on-prem to cloud",desc:"The tool that links your local Active Directory to Entra ID",q:"Azure AD Connect tutorial explained step by step"},
+    {id:"l2c3",label:"On-premises Active Directory basics",desc:"Users, OUs, Group Policy — still widely used in enterprise",q:"Active Directory basics beginners tutorial enterprise"},
+    {id:"l2c4",label:"DNS, DHCP, and basic networking",desc:"Every corporate uses these — understand how they work",q:"DNS DHCP basics IT admin corporate network explained"},
+    {id:"l2c5",label:"VPN and Azure Virtual WAN",desc:"How remote access and site-to-site connectivity works",q:"Azure VPN Virtual WAN tutorial explained AZ-104"},
+  ],
+  l3a:[
+    {id:"l3a1",label:"Zero Trust security model",desc:"The modern corporate security framework — know it deeply",q:"Zero Trust security model Microsoft explained"},
+    {id:"l3a2",label:"SC-300 — Identity and Access Administrator",desc:"Microsoft Identity cert — Entra ID, PIM, B2B, B2C",q:"SC-300 study guide Identity Access Administrator Microsoft"},
+    {id:"l3a3",label:"Privileged Identity Management (PIM)",desc:"Just-in-time privileged access — common in enterprise",q:"Privileged Identity Management PIM Azure AD tutorial"},
+    {id:"l3a4",label:"Microsoft Defender XDR",desc:"Extended Detection and Response across M365 services",q:"Microsoft Defender XDR tutorial explained enterprise"},
+    {id:"l3a5",label:"Microsoft Sentinel basics",desc:"Cloud-native SIEM — threat detection and response",q:"Microsoft Sentinel basics tutorial SIEM beginners"},
+  ],
+  l3b:[
+    {id:"l3b1",label:"Microsoft Purview — compliance and data governance",desc:"Data classification, retention, DLP policies",q:"Microsoft Purview compliance data governance tutorial"},
+    {id:"l3b2",label:"Intune at enterprise scale — large deployments",desc:"Managing thousands of devices — filters, dynamic groups, rings",q:"Intune enterprise scale deployment large organisation tutorial"},
+    {id:"l3b3",label:"Writing technical documentation",desc:"Every corporate needs admins who can document what they build",q:"how to write technical IT documentation templates"},
+    {id:"l3b4",label:"Change management and CAB processes",desc:"How enterprise IT manages changes safely",q:"IT change management CAB process corporate explained"},
+  ],
+  l3c:[
+    {id:"l3c1",label:"AZ-305 — Azure Solutions Architect",desc:"Design landing zones, hub-spoke networks, governance at scale",q:"AZ-305 study guide Azure Solutions Architect"},
+    {id:"l3c2",label:"Infrastructure as Code — Bicep or Terraform",desc:"Deploy entire environments with code — highly valued skill",q:"Bicep vs Terraform Azure Infrastructure as Code beginners"},
+    {id:"l3c3",label:"Azure Landing Zones",desc:"Enterprise-scale Azure foundations — Cloud Adoption Framework",q:"Azure Landing Zones Cloud Adoption Framework explained"},
+    {id:"l3c4",label:"Cost management and FinOps",desc:"Control and optimise Azure spend — every company cares about this",q:"Azure Cost Management FinOps tutorial enterprise"},
+  ],
+  l4a:[
+    {id:"l4a1",label:"Lead a cloud migration project",desc:"End-to-end: assessment → planning → execution → handover",q:"cloud migration project plan Azure step by step enterprise"},
+    {id:"l4a2",label:"Design a Zero Trust architecture",desc:"Present and defend a full security architecture to stakeholders",q:"Zero Trust architecture design Microsoft Azure enterprise"},
+    {id:"l4a3",label:"Multi-cloud awareness (AWS, GCP basics)",desc:"Understand the broader market even if you stay Azure-focused",q:"Azure vs AWS vs GCP comparison cloud admin"},
+  ],
+  l4b:[
+    {id:"l4b1",label:"Presenting to non-technical stakeholders",desc:"Translate technical decisions into business language",q:"how to present IT solutions non technical stakeholders"},
+    {id:"l4b2",label:"Mentoring junior engineers",desc:"Teaching others cements your own knowledge and builds reputation",q:"how to mentor junior IT engineers tips"},
+    {id:"l4b3",label:"Building your personal brand on LinkedIn",desc:"Share what you learn publicly — attracts recruiters and clients",q:"building personal brand LinkedIn IT professional tips"},
+    {id:"l4b4",label:"Freelancing / consulting on the side",desc:"Once senior, you can charge $100–200/hr for contract work",q:"IT cloud consulting freelancing Microsoft Azure how to start"},
+  ],
+  labsetup:[
+    {id:"lab1",label:"Download and install VirtualBox on your PC",desc:"Free VM software to run Windows inside Windows",q:"VirtualBox installation tutorial Windows 2024"},
+    {id:"lab2",label:"Download Windows 11 Enterprise evaluation ISO",desc:"Free 90-day Windows 11 from Microsoft Eval Center",q:"Windows 11 Enterprise evaluation ISO download Microsoft"},
+    {id:"lab3",label:"Create a VM and install Windows 11",desc:"Set up your test device to enrol into Intune",q:"create Windows 11 VM VirtualBox tutorial step by step"},
+    {id:"lab4",label:"Sign up for Microsoft Intune 30-day trial",desc:"Use a new Microsoft account — renew with new email when done",q:"Microsoft Intune trial tenant signup free 2024"},
+    {id:"lab5",label:"Sign up for Azure Free Account",desc:"$200 credit, includes Entra ID Premium features",q:"Azure free account signup tutorial 2024"},
+    {id:"lab6",label:"Enrol your VM into Intune",desc:"Your first real hands-on task — connect your VM to your tenant",q:"enroll Windows VM Microsoft Intune tenant tutorial"},
+    {id:"lab7",label:"Create your first compliance policy and assign it",desc:"Check your VM passes compliance and see what happens if not",q:"create compliance policy Intune assign devices tutorial"},
+  ],
+};
+
+const qaData = [
+  {q:"What is Microsoft Intune and what does it do?",a:"Microsoft Intune is a cloud-based Mobile Device Management (MDM) and Mobile Application Management (MAM) platform. It lets IT admins manage and secure devices — Windows, iOS, Android, macOS — and applications remotely without physically touching them. Instead of reimaging a laptop at a desk, you push policies and software from a central portal to any device anywhere."},
+  {q:"What is the difference between Azure AD Join and Hybrid Azure AD Join?",a:"Azure AD Join means the device is registered only in the cloud (Entra ID) — no on-premises AD needed. This is used in fully cloud environments. Hybrid Azure AD Join means the device is joined to both on-premises Active Directory AND Entra ID — common in enterprises still running on-prem infrastructure. For modern new deployments, pure Azure AD Join with Autopilot is preferred."},
+  {q:"What is Windows Autopilot and how does it work?",a:"Windows Autopilot is Microsoft's zero-touch deployment solution. Instead of reimaging devices, you register the device's hardware hash in Intune, configure a deployment profile, and ship the device directly to the user. When the user turns it on and connects to the internet, it automatically configures itself — applies settings, installs apps, joins Entra ID — with no IT involvement. It replaces the manual reimaging process you're already familiar with."},
+  {q:"What is a Compliance Policy in Intune?",a:"A Compliance Policy defines the minimum security requirements a device must meet — for example: BitLocker must be enabled, OS must be up to date, antivirus must be running. If a device doesn't meet these requirements, it's marked non-compliant. You can then configure actions like sending the user an email, or combining with Conditional Access to block their access to corporate resources until they fix the issue."},
+  {q:"What is Conditional Access and why is it important?",a:"Conditional Access is an Entra ID feature that acts as a gatekeeper. It checks conditions before granting access — for example: 'Is the device compliant? Is the user using MFA? Is the location trusted?' If conditions aren't met, access is blocked or limited. For example: a non-compliant device trying to access Outlook online would be blocked. It's the enforcement engine that makes all your compliance policies actually matter."},
+  {q:"What is the difference between MDM and MAM?",a:"MDM (Mobile Device Management) manages the entire device — you can push settings, wipe it, track it. The device must be enrolled in Intune. MAM (Mobile Application Management) manages only the apps, not the whole device — useful for personal devices (BYOD) where you don't want to control the whole phone but you want to protect corporate apps like Outlook or Teams. You can configure MAM without enrollment."},
+  {q:"What are Configuration Profiles in Intune?",a:"Configuration Profiles let you push settings to devices at scale — things like password requirements, Wi-Fi settings, VPN configuration, restricting USB ports, setting the wallpaper, or enabling Windows Hello. Instead of configuring each device manually, you create one profile and assign it to a group of devices or users. It's the equivalent of Group Policy in traditional on-prem environments."},
+  {q:"How do you deploy an application using Intune?",a:"For Win32 apps, you first package the installer into a .intunewin file using the IntuneWinAppUtil tool. Then in the Intune portal you create a Win32 app entry, upload the package, configure install/uninstall commands, define detection rules (so Intune knows if the app installed successfully), and assign it to a group. The device checks in with Intune and installs the app automatically. For Microsoft 365 Apps, there's a built-in deployment option in Intune that makes it even simpler."},
+  {q:"What is RBAC in Intune and why does it matter?",a:"RBAC (Role Based Access Control) in Intune lets you control what each admin can do. Instead of giving everyone full admin rights, you assign roles — for example a 'Help Desk Operator' can only reset passcodes and restart devices but can't change policies. A 'Policy and Profile Manager' can create and edit policies but can't manage users. This follows the principle of least privilege — in any corporate, admins should only have access to what they need for their job."},
+  {q:"What is an Enrollment Status Page (ESP)?",a:"The Enrollment Status Page is shown to users during Windows Autopilot or device enrollment. It tracks and displays the progress of device configuration, app installations, and policy applications before the user gets to the desktop. You can configure it to block the user from using the device until all required apps and policies are applied — ensuring the device is fully configured and secure before it's handed over to the user."},
+  {q:"What is a Security Baseline in Intune?",a:"Security Baselines are pre-configured groups of security settings recommended by Microsoft based on guidance from Microsoft security teams and NIST standards. Instead of manually configuring 100 security settings, you deploy a baseline and it applies all recommended settings at once. There are baselines for Windows, Microsoft Edge, Microsoft Defender, and Microsoft 365 Apps. They're a quick way to harden devices to a known-good security standard."},
+  {q:"How does Intune handle non-compliant devices?",a:"When a device becomes non-compliant, Intune can take automated actions based on how you configure it. Common actions: immediately mark as non-compliant, send an email to the user, send a push notification, remotely lock the device, or retire/wipe it after a set number of days. Combined with Conditional Access, non-compliant devices can also be automatically blocked from accessing Exchange, SharePoint, or Teams — forcing users to fix their device to regain access."},
+  {q:"What is the difference between Device Wipe and Device Retire in Intune?",a:"Wipe removes all data and resets the device to factory settings — use this when a device is lost, stolen, or being repurposed. It removes everything including personal data. Retire removes only the corporate data — apps, policies, and configuration — and unenrolls the device from Intune while leaving personal data intact. Retire is used for BYOD devices or when an employee leaves but keeps their personal phone."},
+  {q:"What is App Protection Policy (MAM) and when would you use it?",a:"App Protection Policies protect corporate data inside apps without requiring the device to be enrolled in Intune. For example, you can prevent a user from copying data from Outlook and pasting it into a personal app, or require a PIN to open corporate apps, or wipe only corporate app data remotely. This is ideal for BYOD (Bring Your Own Device) scenarios where employees use personal phones — you protect corporate data without controlling their personal device."},
+  {q:"Can you explain what happened when you enrolled a device into Intune in your lab?",a:"This is your chance to talk about your home lab hands-on experience. Walk them through: you set up a free Intune trial tenant, created a user in Entra ID, enrolled a Windows 11 VM by going to Settings → Access work or school → Connect, then watched the device appear in the Intune admin center. You then assigned a compliance policy and a configuration profile to the device group and verified the settings applied. Describe this confidently — actual hands-on experience is what interviewers want to hear."},
+];
+
+let checked = {};
+
+function saveChecked(){try{localStorage.setItem('zth_v2',JSON.stringify(checked))}catch(e){}}
+function loadChecked(){try{const d=localStorage.getItem('zth_v2');if(d)checked=JSON.parse(d)}catch(e){}}
+
+function renderTopics(cid,list){
+  const el=document.getElementById(cid);
+  if(!el)return;
+  el.innerHTML=list.map(t=>`
+    <div class="topic-card ${checked[t.id]?'done':''}" id="card-${t.id}" onclick="toggleTopic('${t.id}')">
+      <div class="checkbox ${checked[t.id]?'checked':''}" id="chk-${t.id}">${checked[t.id]?'✓':''}</div>
+      <div class="topic-info">
+        <div class="topic-label">${t.label}</div>
+        <div class="topic-desc">${t.desc}</div>
+      </div>
+      <div class="btn-group" onclick="event.stopPropagation()">
+        <a class="yt-btn" href="https://www.youtube.com/results?search_query=${encodeURIComponent(t.q)}" target="_blank">▶ YouTube</a>
+        <a class="ms-btn" href="https://learn.microsoft.com/en-us/search/?terms=${encodeURIComponent(t.q)}" target="_blank">📘 MS Learn</a>
+      </div>
+    </div>`).join('');
+}
+
+function toggleTopic(id){
+  checked[id]=!checked[id];
+  saveChecked();
+  document.getElementById('card-'+id)?.classList.toggle('done',checked[id]);
+  const chk=document.getElementById('chk-'+id);
+  if(chk){chk.classList.toggle('checked',checked[id]);chk.textContent=checked[id]?'✓':'';}
+  updateProgress();
+}
+
+function updateProgress(){
+  const all=Object.values(topics).flat();
+  const total=all.length,done=all.filter(t=>checked[t.id]).length;
+  const pct=total?Math.round((done/total)*100):0;
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-text').textContent=done+' of '+total+' topics done';
+}
+
+function gotoTab(pid){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.phase').forEach(p=>p.classList.remove('active'));
+  document.querySelector(`[data-phase="${pid}"]`)?.classList.add('active');
+  document.getElementById(pid)?.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function renderQA(){
+  const c=document.getElementById('qa-container');
+  if(!c)return;
+  c.innerHTML=qaData.map((item,i)=>`
+    <div class="qa-card">
+      <div class="qa-q" onclick="toggleQA(${i})">
+        <span>Q${i+1}. ${item.q}</span>
+        <span class="qa-arrow" id="arr-${i}">▼</span>
+      </div>
+      <div class="qa-a" id="qa-${i}">${item.a}</div>
+    </div>`).join('');
+}
+
+function toggleQA(i){
+  const a=document.getElementById('qa-'+i),arr=document.getElementById('arr-'+i);
+  const open=a.classList.toggle('open');
+  arr.classList.toggle('open',open);
+}
+
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click',()=>gotoTab(tab.dataset.phase));
+});
+
+loadChecked();
+Object.keys(topics).forEach(k=>renderTopics(k,topics[k]));
+renderQA();
+updateProgress();
+</script>
+</body>
+</html>
